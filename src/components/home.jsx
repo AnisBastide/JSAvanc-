@@ -1,26 +1,41 @@
 import React from 'react';
+import { generateGrid} from "../redux/reducer";
 
 import { withRouter } from "react-router";
 
 import { connect } from "react-redux";
 
+import {addBoard} from "../../../../../Documents/ReactJS/example/src/redux/actions";
+
 class Home extends React.Component {
+	addBoard(event){
+		event.preventDefault();
+		let target=event.target;
+		console.log(target[0].value,target[1].value);
+		this.props.addBoard({
+			column: target[0].value,
+			line:target[1].value
+		})
+	}
 	render() {
-		const { profil } = this.props;
+		const {board} = this.props;
+		//const { profil } = this.props;
 		/*return (
 			<p>
 				Hello {profil.pseudo} !
 			</p>
 		);*/
+		//console.log(board.title);
 		return (
 			<div>
-				<form action="">
+				<form onSubmit={ event => this.addBoard(event)}>
 					<p>Entrez un nombre de colonne</p>
-					<input type="number" name="column"/>
+					<input id="column" type="text" name="column" defaultValue={5}/>
 					<p>Entrez un nombre de ligne</p>
-					<input type="number" name="line"/> <br/>
-					<input type="submit" onClick=""/>
+					<input id ="line" type="text" name="line" defaultValue={5}/> <br/>
+					<input type="submit"/>
 				</form>
+				<p>{board.title}</p>
 			</div>
 /*<div>
 
@@ -81,10 +96,20 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		profil: state.profil
+		board: state.board
+	};
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		addBoard: board => {
+			dispatch(addBoard(board))
+		}
+
 	};
 }
 
 export default withRouter(connect(
-	mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(Home));

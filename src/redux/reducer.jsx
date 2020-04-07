@@ -4,6 +4,7 @@ import {
 	CHECK_TODOLIST,
 	DEL_TODOLIST
 } from './actions'
+import React from "react";
 
 
 export const initialState = {
@@ -84,4 +85,11 @@ export default function reducer(state = initialState, action) {
 		default:
 			return state;
 	}
+}
+
+export function generateGrid(nbrLine, nbrColumn){
+	//var nbrColumn = document.getElementById("column").value;
+	//var nbrLine = document.getElementById("line").value;
+	console.log(nbrLine, nbrColumn);
+
 }

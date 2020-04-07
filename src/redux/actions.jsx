@@ -6,6 +6,7 @@ export const EDIT_PROFIL = 'EDIT_PROFIL';
 export const ADD_TODOLIST = 'ADD_TODOLIST';
 export const CHECK_TODOLIST = 'CHECK_TODOLIST';
 export const DEL_TODOLIST = 'DEL_TODOLIST';
+export const ADD_BOARD = 'ADD_BOARD';
 
 /*
  * action creators
@@ -58,3 +59,10 @@ export function checkTodoList(index) {
 export function delTodoList(index) {
   return { type: DEL_TODOLIST, index };
 }
+
+export function addBoard(board){
+  return { type: ADD_BOARD, board};
+}
+/*export function addBoard(){
+  return { type: }
+}*/

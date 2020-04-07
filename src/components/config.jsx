@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
 import { editProfil } from "../redux/actions";
 
-class Config extends React.Component {editProfil(event) {
+class Config extends React.Component {
+		editProfil(event) {
 		event.preventDefault();
 		let target = event.target;
 
