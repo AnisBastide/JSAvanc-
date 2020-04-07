@@ -2,7 +2,7 @@ import {
 	EDIT_PROFIL,
 	ADD_TODOLIST,
 	CHECK_TODOLIST,
-	DEL_TODOLIST
+	DEL_TODOLIST,ADD_BOARD
 } from './actions'
 import React from "react";
 
@@ -51,7 +51,10 @@ export const initialState = {
 			title: 'About',
 			desc: 'Connecter le composant About à Redux'
 		}
-	]
+	],
+	board:{
+
+	}
 };
 
 const arrayHasIndex = (array, index) => Array.isArray(array) && array.hasOwnProperty(index);
@@ -81,6 +84,9 @@ export default function reducer(state = initialState, action) {
 				return { ...state, todoList: [ ...state.todoList.filter((todo, index) => index !== action.index) ] };
 			}
 			return state;
+		case ADD_BOARD:
+			return{...state,board:action.board};
+
 
 		default:
 			return state;

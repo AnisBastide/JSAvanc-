@@ -1,11 +1,10 @@
 import React from 'react';
-import { generateGrid} from "../redux/reducer";
 
 import { withRouter } from "react-router";
 
 import { connect } from "react-redux";
 
-import {addBoard} from "../../../../../Documents/ReactJS/example/src/redux/actions";
+import {addBoard} from "../redux/actions";
 
 class Home extends React.Component {
 	addBoard(event){
@@ -35,7 +34,7 @@ class Home extends React.Component {
 					<input id ="line" type="text" name="line" defaultValue={5}/> <br/>
 					<input type="submit"/>
 				</form>
-				<p>{board.title}</p>
+				<p>{board.line}</p>
 			</div>
 /*<div>
 
