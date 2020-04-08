@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {initialState} from "../redux/reducer";
 
 import { withRouter } from "react-router";
+import {connect} from "react-redux";
 
 class About extends React.Component {
 	constructor() {
@@ -16,9 +16,10 @@ class About extends React.Component {
 	}
 
 	render() {
+		const {about}=this.props;
 		return (
 			<div>
-				{initialState.about.map((author , i) => (
+				{about.map((author , i) => (
 					<div key={i}>
 						By {author.prenom +" "+ author.nom}
 					</div>
@@ -27,5 +28,12 @@ class About extends React.Component {
 		);
 	}
 }
+const mapStateToProps = state => {
+	return {
+		about: state.about
+	};
+}
 
-export default withRouter(About);
+export default withRouter(connect(
+	mapStateToProps
+)(About));

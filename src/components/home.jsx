@@ -31,7 +31,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const {board,profil} = this.props;
+        const {board} = this.props;
         //const { profil } = this.props;
         /*return (
             <p>
