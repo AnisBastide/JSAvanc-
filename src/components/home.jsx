@@ -34,61 +34,9 @@ class Home extends React.Component {
 					<input id ="line" type="text" name="line" defaultValue={5}/> <br/>
 					<input type="submit"/>
 				</form>
-				<p>{board.line}</p>
+				<p>{generateGrid(board.line,board.column)}</p>
 			</div>
-/*<div>
 
-	<table>
-		<tr className={"indice"}>
-			<td className={"hautGauche"}></td>
-			<td className={"indiceHaut"}>2</td>
-			<td className={"indiceHaut"}>8</td>
-			<td className={"indiceHaut"}></td>
-			<td className={"indiceHaut"}></td>
-			<td className={"indiceHaut"}></td>
-		</tr>
-		<tr class={"test"}>
-			<td className={"indiceGauche"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-		</tr>
-		<tr class={"test"}>
-			<td className={"indiceGauche"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-		</tr>
-		<tr class={"test"}>
-			<td className={"indiceGauche"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-		</tr>
-		<tr class={"test"}>
-			<td className={"indiceGauche"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-		</tr>
-		<tr class={"test"}>
-			<td className={"indiceGauche"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-			<td class={"test"}></td>
-		</tr>
-	</table>
-</div>*/
 		);
 	}
 }
@@ -112,3 +60,16 @@ export default withRouter(connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(Home));
+
+function generateGrid(line,column){
+	var tab=[];
+	for(var i=0;i<=column;i++){
+		tab.push([""]);
+		for(var j=0;j<=line;j++){
+			tab[i].push([""]);
+
+		}
+	}
+	console.log(tab);
+	return tab;
+}
