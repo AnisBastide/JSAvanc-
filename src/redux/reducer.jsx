@@ -4,7 +4,6 @@ import {
 	CHECK_TODOLIST,
 	DEL_TODOLIST,ADD_BOARD
 } from './actions'
-import React from "react";
 
 
 export const initialState = {
