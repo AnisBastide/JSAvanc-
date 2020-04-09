@@ -8,14 +8,42 @@ import {addBoard} from "../redux/actions";
 
 class Home extends React.Component {
     addBoard(event) {
+        const {board} = this.props;
         event.preventDefault();
         let target = event.target;
         this.props.addBoard({
-            column: target[0].value,
-            line: target[1].value
+            x: target[0].value,
         })
+        this.setSize();
     }
-    generateGrid(line, column) {
+    setSize(){
+        const {board} = this.props;
+        if (board.x == "tour (5x5)"){
+            this.props.addBoard({
+                line: 5,
+                column: 5,
+            })
+        }
+        else if(board.x == "tête de mort (5x5)"){
+            this.props.addBoard({
+                line: 5,
+                column: 5,
+            })
+        }
+        else if(board.x == "musique (10x10)"){
+            this.props.addBoard({
+                line: 10,
+                column: 10,
+            })
+        }
+        else if(board.x == "réveil (10x10)"){
+            this.props.addBoard({
+                line: 10,
+                column: 10,
+            })
+        }
+    }
+    generateGrid(column, line) {
         var tab = [];
         var tab2 = [];
         for (var i = 0; i < column; i++) {
@@ -72,18 +100,20 @@ class Home extends React.Component {
         return (
             <div>
                 <form onSubmit={event => this.addBoard(event)}>
-                    <p>Entrez un nombre de colonne</p>
-                    <input id="column" type="text" name="column" defaultValue={5}/>
-                    <p>Entrez un nombre de ligne</p>
-                    <input id="line" type="text" name="line" defaultValue={5}/> <br/>
-                    <input type="submit"/>
+                    <select defaultValue="test" size="1">
+                        <option defaultValue="1">tête de mort (5x5)</option>
+                        <option defaultValue="2">tour (5x5)</option>
+                        <option defaultValue="3">musique (10x10)</option>
+                        <option defaultValue="4">réveil (10x10)</option>
+                    </select>
+                    <button type="submit">validate</button>
                 </form>
                 <div id="decal-right">
-                    <table class=".indice">
+                    <table className=".indice">
                     <tbody>{this.generateIndiceHaut(board.line).map((tab, i) => (
                         <tr key={i}>
                             {tab.map((tab,i)=>(
-                                <td key={i} className="indice"><div class="column"><div>{tabIndices[0]}</div> <div>{tabIndices[3]}</div> <div>{tabIndices[2]}</div></div></td>
+                                <td key={i} className="indice"><div className="column"><div>{tabIndices[0]}</div> <div>{tabIndices[3]}</div> <div>{tabIndices[2]}</div></div></td>
                             ))}
                         </tr>
                     ))}</tbody>
@@ -94,7 +124,7 @@ class Home extends React.Component {
                         <tbody>{this.generateIndiceGauche(board.column).map((tab, i) => (
                             <tr key={i}>
                                 {tab.map((tab,i)=>(
-                                    <td key={i} className="indice"><div class="line"><div>1</div><div>2</div><div>3</div></div></td>
+                                    <td key={i} className="indice"><div className="line"><div>1</div><div>2</div><div>3</div></div></td>
                                 ))}
                             </tr>
                         ))}</tbody>
