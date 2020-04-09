@@ -4,7 +4,7 @@ import {withRouter} from "react-router";
 
 import {connect} from "react-redux";
 
-import {addBoard} from "../redux/actions";
+import {addBoard, addTab,addDisplay} from "../redux/actions";
 
 class Home extends React.Component {
     addBoard(event) {
@@ -14,13 +14,17 @@ class Home extends React.Component {
             column: target[0].value,
             line: target[1].value
         })
+        this.props.addTab(
+            this.generateGrid(target[1].value, target[0].value)
+        )
     }
+
     generateGrid(line, column) {
         var tab = [];
         var tab2 = [];
         for (var i = 0; i < column; i++) {
             for (var j = 0; j < line; j++) {
-                tab2.push([]);
+                tab2.push(["0"]);
 
             }
             tab.push(tab2);
@@ -30,8 +34,49 @@ class Home extends React.Component {
         return tab;
     }
 
+    changeColor(event) {
+        const {tab} = this.props;
+        var cell = tab[event.target.dataset.x][event.target.dataset.y];
+        console.log(cell);
+        if (cell == 0) {
+            this.props.tab[event.target.dataset.x][event.target.dataset.y] = ["1"];
+        } else if (cell == 1) {
+            this.props.tab[event.target.dataset.x][event.target.dataset.y] = ["0"];
+        }
+    }
+    displayColor(y,x){
+        const {tab} =this.props;
+        var cell = tab[x][y];
+        if(cell==1){
+            return "black"
+        }
+        if(cell==0){
+            return "white"
+        }
+    }
+
+    displayBoard(){
+        const {tab}=this.props;
+        var display=<div>
+            <table>
+                <tbody>{tab.map((table, y) => (
+                    <tr key={y}>
+                        {table.map((table, x) => (
+                            <td className={this.displayColor(y,x)}
+                                onClick={event => this.changeColor(event)}
+                                key={x}
+                                data-x={x} data-y={y}>   </td>
+                        ))}
+                    </tr>
+                ))}</tbody>
+            </table>
+        </div>
+        this.props.addDisplay(display);
+
+        return (display);
+}
+
     render() {
-        const {board} = this.props;
         //const { profil } = this.props;
         /*return (
             <p>
@@ -47,20 +92,8 @@ class Home extends React.Component {
                     <p>Entrez un nombre de ligne</p>
                     <input id="line" type="text" name="line" defaultValue={5}/> <br/>
                     <input type="submit"/>
+                    {this.displayBoard()}
                 </form>
-                <div>
-                <table>
-                    <tbody>{this.generateGrid(board.line, board.column).map((tab, i) => (
-                        <tr key={i}>
-                            {tab.map((tab,i)=>(
-                            <td key={i} className="test"></td>
-                            ))}
-                        </tr>
-
-
-                    ))}</tbody>
-                </table>
-                </div>
             </div>
         );
     }
@@ -68,7 +101,9 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        board: state.board
+        board: state.board,
+        tab: state.tab,
+        display:state.display
     };
 }
 
@@ -76,6 +111,12 @@ const mapDispatchToProps = dispatch => {
     return {
         addBoard: board => {
             dispatch(addBoard(board))
+        },
+        addTab: tab => {
+            dispatch(addTab(tab))
+        },
+        addDisplay: display => {
+            dispatch(addDisplay(display))
         }
 
     };
@@ -85,5 +126,7 @@ export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
 )(Home));
+
+
 
 

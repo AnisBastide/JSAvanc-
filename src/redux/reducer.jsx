@@ -2,7 +2,7 @@ import {
 	EDIT_PROFIL,
 	ADD_TODOLIST,
 	CHECK_TODOLIST,
-	DEL_TODOLIST,ADD_BOARD
+	DEL_TODOLIST, ADD_BOARD, ADD_TAB, ADD_DISPLAY
 } from './actions'
 
 
@@ -53,7 +53,8 @@ export const initialState = {
 	],
 	board:{
 
-	}
+	},
+	tab:[]
 };
 
 const arrayHasIndex = (array, index) => Array.isArray(array) && array.hasOwnProperty(index);
@@ -85,16 +86,13 @@ export default function reducer(state = initialState, action) {
 			return state;
 		case ADD_BOARD:
 			return{...state,board:action.board};
+		case ADD_TAB:
+			return{...state,tab:action.tab};
+		case ADD_DISPLAY:
+			return {...state,display:action.display};
 
 
 		default:
 			return state;
 	}
-}
-
-export function generateGrid(nbrLine, nbrColumn){
-	//var nbrColumn = document.getElementById("column").value;
-	//var nbrLine = document.getElementById("line").value;
-	console.log(nbrLine, nbrColumn);
-
 }

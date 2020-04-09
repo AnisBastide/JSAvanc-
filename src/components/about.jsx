@@ -5,15 +5,6 @@ import { withRouter } from "react-router";
 import {connect} from "react-redux";
 
 class About extends React.Component {
-	constructor() {
-		super();
-
-		this.authors = [
-			{
-				pseudo: 'Angamara'
-			}
-		];
-	}
 
 	render() {
 		const {about}=this.props;

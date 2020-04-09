@@ -173,7 +173,7 @@ table td {
 	border: 1px solid black;
 }
 .test {
-	background-color: red;
+	background-color: white;
 	width: 20px;
 	height: 20px;
 }
@@ -190,5 +190,15 @@ table td {
 
 .hautGauche {
 	border: none;
+}
+.white {
+	background-color: white;
+	width: 20px;
+	height: 20px;
+}
+.black {
+	background-color: black;
+	width: 20px;
+	height: 20px;
 }
 
