@@ -174,53 +174,48 @@ table td {
 }
 .test {
 	background-color: white;
-	width: 20px;
-	height: 20px;
+	width: 60px;
+	height: 60px;
 }
 .indiceHaut {
-	height: 40px;
+	height: 60px;
+	width: 60px;
 	text-align:center;
 }
 .indiceGauche {
-	background-color: white;
-	width: 40px;
-	height:20px;
-	text-align: center;
-}
-
-.hautGauche {
-	border: none;
+	width: 60px;
+	height: 60px;;
+	text-align: center
 }
 .white {
 	background-color: white;
-	width: 20px;
-	height: 20px;
+	width: 60px;
+	height: 60px;
 }
 .black {
 	background-color: black;
-	width: 20px;
-	height: 20px;
+	width: 60px;
+	height: 60px;
 }
 #align{
 	display: flex;
 	flex-direction: row;
 }
 #decal-right {
-	margin-left: 26px;
+	margin-left: 62px;
 }
 .indice {
-	width: 20px;
-	height: 20px;
 	background-color: yellow;
 }
 .column {
 	display:flex;
-	display:block;
 	flex-direction: column;
-	text-align:center;
 }
 .line {
 	display: flex;
 	flex-direction: row;
+	text-align: center;
+	justify-content: center;
+	justify-content: space-around;
 }
 
