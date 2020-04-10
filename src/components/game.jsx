@@ -4,9 +4,12 @@ import {withRouter} from "react-router";
 
 import {connect} from "react-redux";
 
-import {addBoard, addTab,changeColor} from "../redux/actions";
+import {addBoard,changeColor} from "../redux/actions";
 
 class Home extends React.Component {
+    /*
+    define all the variable that we need in the class
+     */
     constructor() {
         super();
         this.deadFace = [["0", "1", "1", "1", "0"], ["1", "1", "1", "1", "1"], ["1", "0", "1", "0", "1"], ["1", "1", "1", "1", "1"], ["0", "1", "0", "1", "0"]];
@@ -24,6 +27,9 @@ class Home extends React.Component {
     tabHaut = [];
     tabGauche = [];
     o = -1;
+    /*
+    get the chosen board and add it to the page
+     */
     addBoard(event) {
         event.preventDefault();
         let target = event.target;
@@ -31,6 +37,9 @@ class Home extends React.Component {
         this.setSize(input);
     }
 
+    /*
+    check if you correctly done the draw
+     */
     checkResult() {
         const {board} = this.props;
         let boardToCompare = JSON.stringify(board.board);
@@ -42,6 +51,9 @@ class Home extends React.Component {
         }
     }
 
+    /*
+    set the size of the board and call the function to create it, also create the left and top board with values
+     */
     setSize(input) {
         if (input == "tour (5x5)") {
             this.inputValue = input;
@@ -84,6 +96,9 @@ class Home extends React.Component {
     }
 
 
+    /*
+    generate the grid used to display the board
+     */
     generateGrid(line, column) {
         var tab = [];
         var tab2 = [];
@@ -99,6 +114,9 @@ class Home extends React.Component {
         return tab;
     }
 
+    /*
+    change the value of a cell in the board to change color
+     */
     changeColor(event) {
         var cell = this.props.board.board[event.target.dataset.x][event.target.dataset.y];
         if (cell == 0) {
@@ -115,6 +133,9 @@ class Home extends React.Component {
         }
     }
 
+    /*
+    display the color after change
+     */
     displayColor(y, x) {
         const {board} = this.props;
         var cell = board.board[y][x];
@@ -126,6 +147,9 @@ class Home extends React.Component {
         }
     }
 
+    /*
+    display the board with the grid and the left and top board
+     */
     displayBoard() {
         const {board} = this.props;
         var display =
@@ -182,6 +206,9 @@ class Home extends React.Component {
         return (display);
     }
 
+    /*
+    display the "verify" button if you have chosen a draw
+     */
     getResult() {
         return (<div className={"column"}>
                 {this.state.result}
@@ -192,6 +219,9 @@ class Home extends React.Component {
     }
 
 
+    /*
+    generate the top grid
+     */
     generateIndiceHaut(column) {
         var tab = [];
         var tab2 = [];
@@ -212,6 +242,9 @@ class Home extends React.Component {
         this.o = this.o+1;
     }
 
+    /*
+    generate the left grid
+     */
     generateIndiceGauche(line) {
         var tab = [];
         var tab2 = [];
@@ -248,6 +281,9 @@ class Home extends React.Component {
     }
 }
 
+/*
+used to get a value from the server
+ */
 const mapStateToProps = state => {
     return {
         board: state.board,
@@ -256,6 +292,9 @@ const mapStateToProps = state => {
     };
 }
 
+/*
+used to modify a value from the server
+ */
 const mapDispatchToProps = dispatch => {
     return {
         addBoard: board => {
@@ -268,6 +307,9 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
+/*
+connect to the server
+ */
 export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
