@@ -4,7 +4,7 @@ import {withRouter} from "react-router";
 
 import {connect} from "react-redux";
 
-import {addBoard, addTab, addDisplay, changeColor} from "../redux/actions";
+import {addBoard, addTab,changeColor} from "../redux/actions";
 
 class Home extends React.Component {
     constructor() {
@@ -20,7 +20,10 @@ class Home extends React.Component {
             button: false
         }
     }
-
+    inputValue = "";
+    tabHaut = [];
+    tabGauche = [];
+    o = -1;
     addBoard(event) {
         event.preventDefault();
         let target = event.target;
@@ -41,12 +44,15 @@ class Home extends React.Component {
 
     setSize(input) {
         if (input == "tour (5x5)") {
+            this.inputValue = input;
             this.props.addBoard({
                 line: 5,
                 column: 5,
                 board: this.generateGrid(5, 5)
             })
             this.finalBoard = this.tower;
+            this.tabHaut = [<div>2</div>, <div>4</div>, <div><div>3</div> <div>1</div></div>, <div>4</div>, <div>2</div>];
+            this.tabGauche = [<div className="line"> <div>1</div> <div>1</div> <div>1</div></div>, <div>5</div>, <div>3</div>,<div className="line"> <div>1</div> <div>1</div> </div>, <div>3</div>];
         } else if (input == "tête de mort (5x5)") {
             this.props.addBoard({
                 line: 5,
@@ -54,7 +60,8 @@ class Home extends React.Component {
                 board: this.generateGrid(5, 5)
             })
             this.finalBoard = this.deadFace;
-
+            this.tabHaut = [<div>3</div>, <div><div>2</div> <div>2</div></div>, <div>4</div>,  <div><div>2</div> <div>2</div></div>, <div>3</div>];
+            this.tabGauche = [<div>3</div>, <div>5</div>,<div className="line"> <div>1</div> <div>1</div> <div>1</div></div>,<div>5</div>, <div className="line"> <div>1</div> <div>1</div> </div>];
         } else if (input == "musique (10x10)") {
             this.props.addBoard({
                 line: 10,
@@ -62,7 +69,8 @@ class Home extends React.Component {
                 board: this.generateGrid(10, 10)
             })
             this.finalBoard = this.music;
-
+            this.tabHaut = [<div>2</div>, <div>4</div>, <div>4</div>, <div>8</div>, <div className="column"> <div>1</div><div>1</div></div>, <div className="column"> <div>1</div><div>1</div> </div>,<div className="column"> <div>1</div><div>1</div><div>2</div> </div>,<div className="column"> <div>1</div><div>1</div><div>4</div> </div>,<div className="column"> <div>1</div><div>1</div><div>4</div> </div>, <div>8</div>];
+            this.tabGauche = [<div>4</div>,<div className="line"> <div>3</div><div>1</div> </div>, <div className="line"> <div>1</div><div>3</div> </div>, <div className="line"> <div>4</div><div>1</div> </div>, <div className="line"> <div>1</div><div>1</div> </div>, <div className="line"> <div>1</div><div>3</div> </div>, <div className="line"> <div>3</div><div>4</div> </div>, <div className="line"> <div>4</div><div>4</div> </div>, <div className="line"> <div>4</div><div>2</div> </div>, <div>2</div>];
         } else if (input == "réveil (10x10)") {
             this.props.addBoard({
                 line: 10,
@@ -70,7 +78,8 @@ class Home extends React.Component {
                 board: this.generateGrid(10, 10)
             })
             this.finalBoard = this.reveil;
-
+            this.tabHaut = [<div>2</div>, <div className="column"> <div>2</div><div>4</div></div>, <div className="column"> <div>1</div><div>6</div><div>1</div></div>, <div className="column"> <div>5</div><div>3</div></div>, <div className="column"> <div>4</div><div>3</div> </div>,<div className="column"> <div>1</div><div>4</div> </div>,<div>9</div>, <div className="column"> <div>1</div><div>6</div><div>1</div> </div>, <div className="column"> <div>2</div><div>4</div></div>, <div>2</div>];
+            this.tabGauche = [<div className="line"> <div>2</div><div>2</div> </div>,<div className="line"> <div>2</div><div>4</div><div>2</div> </div>, <div className="line"> <div>1</div><div>3</div><div>2</div><div>1</div> </div>, <div className="line"> <div>4</div><div>3</div> </div>, <div className="line"> <div>4</div><div>3</div> </div>, <div className="line"> <div>3</div><div>4</div> </div>, <div className="line"> <div>2</div><div>5</div> </div>, <div>6</div>, <div>4</div>, <div className="line"> <div>2</div><div>2</div> </div>];
         }
     }
 
@@ -119,7 +128,6 @@ class Home extends React.Component {
 
     displayBoard() {
         const {board} = this.props;
-        var tabIndices = ["1", "2", "3", "4", "5"];
         var display =
             <div>
 
@@ -130,10 +138,8 @@ class Home extends React.Component {
                                 <tr key={i}>
                                     {tab.map((tab, i) => (
                                         <td key={i} className="indice">
-                                            <div className="column">
-                                                <div>{tabIndices[0]}</div>
-                                                <div>{tabIndices[3]}</div>
-                                                <div>{tabIndices[2]}</div>
+                                            <div className="column" className="indiceHaut">
+                                                {this.tabHaut[i]}
                                             </div>
                                         </td>
                                     ))}
@@ -147,10 +153,9 @@ class Home extends React.Component {
                                 <tr key={i}>
                                     {tab.map((tab, i) => (
                                         <td key={i} className="indice">
-                                            <div className="line">
-                                                <div>1</div>
-                                                <div>2</div>
-                                                <div>3</div>
+                                            <div className="line" className="indiceGauche">
+                                                {this.increment()}
+                                                {this.tabGauche[this.o]}
                                             </div>
                                         </td>
                                     ))}
@@ -170,18 +175,18 @@ class Home extends React.Component {
                             ))}</tbody>
                         </table>
                     </div>
-                    {this.state.button ? this.getResult() : <div></div>}
-
                 </div>
+                {this.state.button ? this.getResult() : <div></div>}
             </div>;
-
+        this.o = -1;
         return (display);
     }
 
     getResult() {
-        return (<div>
+        return (<div className={"column"}>
+                {this.state.result}
                 <button onClick={() => this.checkResult()}>Verify</button>
-                {this.state.result} </div>
+                 </div>
         )
 
     }
@@ -190,6 +195,9 @@ class Home extends React.Component {
     generateIndiceHaut(column) {
         var tab = [];
         var tab2 = [];
+        if (this.props.addBoard.line == 5) {
+            console.log("test");
+        }
         for (var i = 0; i < 1; i++) {
             for (var j = 0; j < column; j++) {
                 tab2.push([]);
@@ -198,6 +206,10 @@ class Home extends React.Component {
             tab2 = [];
         }
         return tab;
+    }
+
+    increment(){
+        this.o = this.o+1;
     }
 
     generateIndiceGauche(line) {
@@ -213,8 +225,6 @@ class Home extends React.Component {
         }
         return tab;
     }
-
-
     render() {
         return (
             <div>
@@ -250,12 +260,6 @@ const mapDispatchToProps = dispatch => {
     return {
         addBoard: board => {
             dispatch(addBoard(board))
-        },
-        addTab: tab => {
-            dispatch(addTab(tab))
-        },
-        addDisplay: display => {
-            dispatch(addDisplay(display))
         },
         changeColor: data => {
             dispatch(changeColor(data))

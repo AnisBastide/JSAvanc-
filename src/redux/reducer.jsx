@@ -2,7 +2,7 @@ import {
     EDIT_PROFIL,
     ADD_TODOLIST,
     CHECK_TODOLIST,
-    DEL_TODOLIST, ADD_BOARD, ADD_TAB, ADD_DISPLAY, CHANGE_COLOR, CHANGE_RESULT
+    DEL_TODOLIST, ADD_BOARD,CHANGE_COLOR
 } from './actions'
 
 
@@ -57,8 +57,7 @@ export const initialState = {
         board: [],
         result:""
 
-    },
-    tab: []
+    }
 };
 
 const arrayHasIndex = (array, index) => Array.isArray(array) && array.hasOwnProperty(index);
@@ -92,10 +91,6 @@ export default function reducer(state = initialState, action) {
             return state;
         case ADD_BOARD:
             return {...state, board: action.board};
-        case ADD_TAB:
-            return {...state, tab: action.tab};
-        case ADD_DISPLAY:
-            return {...state, display: action.display};
         case CHANGE_COLOR:
             return {
                 ...state, board: { ...state.board,board:state.board.board.map((line, y) => {
