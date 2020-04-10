@@ -2,7 +2,7 @@ import {
     EDIT_PROFIL,
     ADD_TODOLIST,
     CHECK_TODOLIST,
-    DEL_TODOLIST, ADD_BOARD, ADD_TAB, ADD_DISPLAY, CHANGE_COLOR
+    DEL_TODOLIST, ADD_BOARD, ADD_TAB, ADD_DISPLAY, CHANGE_COLOR, CHANGE_RESULT
 } from './actions'
 
 
@@ -54,7 +54,8 @@ export const initialState = {
     board: {
         line: 0,
         column: 0,
-        board: []
+        board: [],
+        result:""
 
     },
     tab: []
@@ -101,7 +102,7 @@ export default function reducer(state = initialState, action) {
 					if (y === action.data.y) {
 						return line.map((square, x) => {
 							if (x === action.data.x) {
-                                return square==0? 1:0;
+                                return square==0? "1":"0";
 							}
 							return square;
 						});

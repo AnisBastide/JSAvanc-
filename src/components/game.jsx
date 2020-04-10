@@ -4,14 +4,39 @@ import {withRouter} from "react-router";
 
 import {connect} from "react-redux";
 
-import {addBoard, addTab, addDisplay,changeColor} from "../redux/actions";
+import {addBoard, addTab, addDisplay, changeColor} from "../redux/actions";
 
 class Home extends React.Component {
+    constructor() {
+        super();
+        this.deadFace = [["0", "1", "1", "1", "0"], ["1", "1", "1", "1", "1"], ["1", "0", "1", "0", "1"], ["1", "1", "1", "1", "1"], ["0", "1", "0", "1", "0"]];
+        this.tower = [["1", "0", "1", "0", "1"], ["1", "1", "1", "1", "1"], ["0", "1", "1", "1", "0"], ["0", "1", "0", "1", "0"], ["0", "1", "1", "1", "0"]];
+        this.music = [["0", "0", "0", "0", "0", "0", "1", "1", "1", "1"], ["0", "0", "0", "1", "1", "1", "0", "0", "0", "1"], ["0", "0", "0", "1", "0", "0", "0", "1", "1", "1"], ["0", "0", "0", "1", "1", "1", "1", "0", "0", "1"], ["0", "0", "0", "1", "0", "0", "0", "0", "0", "1"], ["0", "0", "0", "1", "0", "0", "0", "1", "1", "1"], ["0", "1", "1", "1", "0", "0", "1", "1", "1", "1"], ["1", "1", "1", "1", "0", "0", "1", "1", "1", "1"], ["1", "1", "1", "1", "0", "0", "0", "1", "1", "0"], ["0", "1", "1", "0", "0", "0", "0", "0", "0", "0"]];
+        this.reveil=[["0","1","1","0","0","0","0","1","1","0"],["1","1","0","1","1","1","1","0","1","1"],["1","0","1","1","1","0","1","1","0", "1"],["0","1","1","1","1","0","1","1","1","0"], ["0","1","1","1","1","0","1","1","1","0"], ["0","1","1","1","0","1","1","1","1","0"], ["0","1","1","0","1","1","1","1","1","0"], ["0","0","1","1","1","1","1","1","0","0"], ["0","0","0","1","1","1","1","0","0","0"], ["0","0","1","1","0","0","1","1","0","0"]];
+        this.check = false;
+        this.finalBoard = [];
+        this.state = {
+            result: "Vous n'avez pas encore trouvé",
+            button: false
+        }
+    }
+
     addBoard(event) {
         event.preventDefault();
         let target = event.target;
-        var input= target[0].value;
+        var input = target[0].value;
         this.setSize(input);
+    }
+
+    checkResult() {
+        const {board} = this.props;
+        let boardToCompare = JSON.stringify(board.board);
+        let boardFinal = JSON.stringify(this.finalBoard);
+        if (boardToCompare == boardFinal) {
+            this.setState({...this.state, result: "Bien joué"});
+        } else {
+            this.setState({...this.state, result: "Vous n'avez pas encore trouvé"});
+        }
     }
 
     setSize(input) {
@@ -19,26 +44,33 @@ class Home extends React.Component {
             this.props.addBoard({
                 line: 5,
                 column: 5,
-                board:this.generateGrid(5, 5)
+                board: this.generateGrid(5, 5)
             })
+            this.finalBoard = this.tower;
         } else if (input == "tête de mort (5x5)") {
             this.props.addBoard({
                 line: 5,
                 column: 5,
-                board:this.generateGrid(5, 5)
+                board: this.generateGrid(5, 5)
             })
+            this.finalBoard = this.deadFace;
+
         } else if (input == "musique (10x10)") {
             this.props.addBoard({
                 line: 10,
                 column: 10,
-                board:this.generateGrid(10, 10)
+                board: this.generateGrid(10, 10)
             })
+            this.finalBoard = this.music;
+
         } else if (input == "réveil (10x10)") {
             this.props.addBoard({
                 line: 10,
                 column: 10,
-                board:this.generateGrid(10, 10)
+                board: this.generateGrid(10, 10)
             })
+            this.finalBoard = this.reveil;
+
         }
     }
 
@@ -48,27 +80,29 @@ class Home extends React.Component {
         var tab2 = [];
         for (var i = 0; i < column; i++) {
             for (var j = 0; j < line; j++) {
-                tab2.push(["0"]);
+                tab2.push("0");
 
             }
             tab.push(tab2);
             tab2 = [];
         }
-        console.log(tab);
+        this.setState({...this.state, button: true});
         return tab;
     }
 
     changeColor(event) {
-        // const {board} = this.props;
         var cell = this.props.board.board[event.target.dataset.x][event.target.dataset.y];
-        console.log(cell);
         if (cell == 0) {
-            this.props.changeColor({x:parseInt(event.target.dataset.x),
-                y:parseInt(event.target.dataset.y)})
+            this.props.changeColor({
+                x: parseInt(event.target.dataset.x),
+                y: parseInt(event.target.dataset.y)
+            })
 
         } else if (cell == 1) {
-            this.props.changeColor({x:parseInt(event.target.dataset.x),
-                y:parseInt(event.target.dataset.y)})
+            this.props.changeColor({
+                x: parseInt(event.target.dataset.x),
+                y: parseInt(event.target.dataset.y)
+            })
         }
     }
 
@@ -136,12 +170,21 @@ class Home extends React.Component {
                             ))}</tbody>
                         </table>
                     </div>
+                    {this.state.button ? this.getResult() : <div></div>}
+
                 </div>
             </div>;
 
         return (display);
     }
 
+    getResult() {
+        return (<div>
+                <button onClick={() => this.checkResult()}>Verify</button>
+                {this.state.result} </div>
+        )
+
+    }
 
 
     generateIndiceHaut(column) {
@@ -154,7 +197,6 @@ class Home extends React.Component {
             tab.push(tab2);
             tab2 = [];
         }
-        console.log(tab);
         return tab;
     }
 
@@ -169,19 +211,11 @@ class Home extends React.Component {
             tab.push(tab2);
             tab2 = [];
         }
-        console.log(tab);
         return tab;
     }
 
 
     render() {
-        //const { profil } = this.props;
-        /*return (
-        <p>
-        Hello {profil.pseudo} !
-        </p>
-        );*/
-        //console.log(board.title);
         return (
             <div>
                 <form onSubmit={event => this.addBoard(event)}>
@@ -223,7 +257,7 @@ const mapDispatchToProps = dispatch => {
         addDisplay: display => {
             dispatch(addDisplay(display))
         },
-        changeColor:data=>{
+        changeColor: data => {
             dispatch(changeColor(data))
         }
 

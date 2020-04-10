@@ -77,3 +77,4 @@ export function addDisplay(display) {
 export function changeColor(data){
   return{type:CHANGE_COLOR,data};
 }
+
